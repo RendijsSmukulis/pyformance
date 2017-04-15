@@ -33,6 +33,7 @@ class OpenTSDBReporter(Reporter):
         metrics = self._collect_metrics(registry or self.registry, timestamp)
         if metrics:
             try:
+                print("HIT REPORT NOW")
                 request = urllib.Request(self.url,
                                          data=self._format_data_string_for_urllib(json.dumps(metrics)),
                                          headers={'content-type': "application/json"})
@@ -40,7 +41,9 @@ class OpenTSDBReporter(Reporter):
                 auth_header = base64.b64encode(bytes(authentication_data.encode("utf-8")))
                 request.add_header("Authorization", "Basic {0}".format(auth_header))
                 urllib.urlopen(request)
+                print("REPORTED")
             except Exception as e:
+                print("OH NO!")
                 sys.stderr.write("{0}\n".format(e))
 
     def _collect_metrics(self, registry, timestamp=None):
