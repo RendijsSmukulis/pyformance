@@ -44,6 +44,7 @@ class OpenTSDBReporter(Reporter):
                 print("REPORTED")
             except Exception as e:
                 print("OH NO!")
+                print("{0}\n".format(e))
                 sys.stderr.write("{0}\n".format(e))
 
     def _collect_metrics(self, registry, timestamp=None):
